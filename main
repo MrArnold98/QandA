@@ -33,9 +33,10 @@ nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('wordnet')
 # Creating our tokenizer and lemmatizer
+
 tknzr = TweetTokenizer()
 lemmatizer = WordNetLemmatizer()
-
+spell=SpellChecker()
 def remove_emoji(string):
     emoji_pattern = re.compile("["
                            u"\U0001F600-\U0001F64F" # emoticons
@@ -155,12 +156,6 @@ def SCM(q, a):
 #f'\nThe percentage chance the answer is useful is {percentage_similarity}% similar.'
   return f'The answer is {percentage_similarity}% similar to the question.'
 
-'''  # predict if answer is useful or not based on a cut_off
-  if similarity > cut_off:
-    print('This Answer is likely useful!')
-  else:
-    print('This Answer is probably unuseful!')'''
-
 def is_useful(q, a, questionType, answerType):
     """Function that evaluates the usefulness of the answer to a question 
     in the Amazon reviews section"""
@@ -181,5 +176,14 @@ def is_useful(q, a, questionType, answerType):
         return 'This answer is unhelpful'
     return SCM(q=df['question'].iloc[0],a=df['answer'].iloc[0])
 
+st.title("How useful is the answer?")
+st.text("Fire away!")
+q = st.text_input("Ask a question", value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None)
+qtype = st.radio("What type of question is this?",["yes/no","open-ended"])
+a = st.text_input("Answer the question", value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None)
+atype = st.radio("What type of answer is this?",["Y","N","Other","That is confidential"])
+if st.button("Let's go", key=None, help=None, on_click=None, args=None, kwargs=None):
+  answer=is_useful(q,a,qtype,atype)
+  st.text({answer})
 
 
