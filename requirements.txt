@@ -1,1 +1,13 @@
-
+textblob
+gensim
+pandas
+streamlit
+numpy
+pickle
+nltk
+pyspellchecker
+gzip
+os
+re
+itertools
+string
