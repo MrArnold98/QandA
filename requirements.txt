@@ -1,3 +1,4 @@
+sklearn
 textblob
 gensim
 pandas
