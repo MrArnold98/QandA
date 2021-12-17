@@ -122,12 +122,10 @@ def specboyQ(df):
     df['Helpful-QAnswered']=0
     df.at[QAnswered,'Helpful-QAnswered']=1
     return df
-@st.cache
-def slow_funcs():
+ def slow_funcs():
     w2v_model = api.load("glove-wiki-gigaword-50")
     similarity_index = WordEmbeddingSimilarityIndex(w2v_model)
     return w2v_model, similarity_index
-w2v_model, similarity_index = slow_funcs()
 def SCM(q, a): 
   """Function that calculates Soft Cosine Similarity between a Question and its Answer
      references: https://devopedia.org/question-similarity
@@ -180,6 +178,7 @@ qtype = st.radio("What type of question is this?",["yes/no","open-ended"])
 a = st.text_input("Answer the question", value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None)
 atype = st.radio("What type of answer is this?",["Y","N","Other","That is confidential"])
 if st.button("Am I useful? 🥺", key=None, help=None, on_click=None, args=None, kwargs=None):
+  w2v_model, similarity_index = slow_funcs()
   answer=is_useful(q,a,qtype,atype)
   st.text({answer})
 
