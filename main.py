@@ -85,7 +85,7 @@ def stopwords():
     keepwords="don't,does,no,not,can,should,will,aren't,couldn't,doesn't,isn't,shouldn't,won't,is".split(',')
     for word in keepwords:
         stpwrd.remove(word)
-stopwrods()
+stopwords()
 def lem_data(data):
   data = tknzr.tokenize(data)   
   data = [word for word in data if word not in stpwrd]  
