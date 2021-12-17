@@ -4,7 +4,6 @@
 !pip install --upgrade gensim
 !pip install pyspellchecker
 import streamlit as st
-import pickle
 import pandas as pd
 import numpy as np
 import gzip
