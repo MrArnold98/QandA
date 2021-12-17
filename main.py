@@ -87,7 +87,7 @@ def lem_data(data):
   data = [word for word in data if word not in stpwrd]  
   data = [lemmatizer.lemmatize(x) for x in data]
   return data
-@st.cache
+@st.cache(allow_output_mutation=True)
 def questiontype(df):
   YeeeNooo=df[df['question'].str.contains('does|can|will|would',flags=re.IGNORECASE)].index.to_list() 
   df['qtype']='open-ended'
@@ -98,9 +98,11 @@ def yes_no(df):
 # yes/no helpful replies
     Yes_No=df[df['answer'].str.contains('definitely|absolutely|positively|suppose so|believe so|think so',flags=re.IGNORECASE,regex=True)].index.to_list()
     Yes=df[df['answer'].str.contains('yes',flags=re.IGNORECASE,regex=False)].index.to_list()
+    Yep=df[df['answer'].str.contains('yep',flags=re.IGNORECASE,regex=False)].index.to_list()
     No=df[df['answer'].str.contains('no',flags=re.IGNORECASE,regex=False)].index.to_list()
+    Nah=df[df['answer'].str.contains('nah',flags=re.IGNORECASE,regex=False)].index.to_list()
     Not=df[df['answer'].str.contains('not',flags=re.IGNORECASE,regex=False)].index.to_list()
-    df.at[Yes_No+Yes+No+Not,'Helpful-Definitive']=1
+    df.at[Yes_No+Yes+No+Not+Yep+Nah,'Helpful-Definitive']=1
     
     definitively_definitive=df[((df['answerType']=='Y')|(df['answerType']=='N'))&(df['Helpful-Definitive']==0)].index.to_list()
     for x in definitively_definitive:
