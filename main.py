@@ -154,10 +154,10 @@ def SCM(q, a):
   # convert SCM score to percentage
   percentage_similarity= round(similarity * 100,2)
   cut_off=0.2
-    if similarity > cut_off:
-        pred = f'This answer is likely helpful!, Q&A similairty = {percentage_similarity:.1f}%'
-    else:
-        pred = f'This answer is probably unhelpful, Q&A similairty = {percentage_similarity:.1f}%'  
+  if similarity > cut_off:
+    pred = f'This answer is likely helpful!, Q&A similairty = {percentage_similarity:.1f}%'
+  else:
+    pred = f'This answer is probably unhelpful, Q&A similairty = {percentage_similarity:.1f}%'  
   return pred
 def is_useful(q, a, questionType, answerType):
     """Function that evaluates the usefulness of the answer to a question 
