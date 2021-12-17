@@ -68,7 +68,9 @@ def clean_text(text):
     text_nonum = re.sub(r'\d+', '', text)
     text_no_misplacedstop = text_nonum.replace('.',' ')
     text_no_forslash = text_no_misplacedstop.replace('/',' ')
+    tknzr = TweetTokenizer()
     answer = tknzr.tokenize(text_no_forslash)
+    spell=SpellChecker()
     SpellChecked=[spell.correction(word) for word in answer]
     answer =' '.join(SpellChecked)
     # remove punctuations and convert characters to lower case
