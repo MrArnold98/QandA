@@ -7,4 +7,3 @@ nltk
 pyspellchecker
 indexed-gzip
 regex
-string
