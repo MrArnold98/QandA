@@ -145,7 +145,7 @@ def SCM(q, a):
   a_bag = dictionary.doc2bow(a_lem)
 
   # Prepare the similarity matrix
-  similarity_matrix = SparseTermSimilarityMatrix(slow_funcs, dictionary)
+  similarity_matrix = SparseTermSimilarityMatrix(slow_funcs(), dictionary)
 
   # compute SCM using the inner_product method
   similarity = slow_funcs.inner_product(q_bag, a_bag, normalized=(True, True))
