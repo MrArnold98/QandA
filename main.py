@@ -117,7 +117,7 @@ def specboyQ(df):
     how=df[(df['answer'].str.contains("use|using|have to",flags=re.IGNORECASE))&(df['question'].str.contains('how',flags=re.IGNORECASE))].index.to_list()
     can=df[(df['answer'].str.contains("can",flags=re.IGNORECASE))&(df['question'].str.contains('can',flags=re.IGNORECASE))].index.to_list()
     inclusive=df[(df['answer'].str.contains('came with|comes with|include',flags=re.IGNORECASE))&(df['question'].str.contains('come with|include',flags=re.IGNORECASE))].index.to_list()
-    QAnswered=inclusive+where+itis+size+how
+    QAnswered=inclusive+where+itis+size+how+can
     df['Helpful-QAnswered']=0
     df.at[QAnswered,'Helpful-QAnswered']=1
     return df
