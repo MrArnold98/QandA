@@ -29,8 +29,11 @@ def importish():
     nltk.download('stopwords')
     nltk.download('punkt')
     nltk.download('wordnet')
+    global tknzr
     tknzr = TweetTokenizer()
+    global lemmatizer
     lemmatizer = WordNetLemmatizer()
+    global spell
     spell=SpellChecker()
 importish()
 
