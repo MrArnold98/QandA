@@ -129,7 +129,7 @@ def slow_funcs():
     w2v_model = api.load("glove-wiki-gigaword-50")
     similarity_index = WordEmbeddingSimilarityIndex(w2v_model)
     return similarity_index
-@st.cache
+@st.cache(suppress_st_warning=True)
 def SCM(q, a): 
   """Function that calculates Soft Cosine Similarity between a Question and its Answer
      references: https://devopedia.org/question-similarity
