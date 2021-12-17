@@ -29,14 +29,10 @@ def importish():
     nltk.download('stopwords')
     nltk.download('punkt')
     nltk.download('wordnet')
-    global tknzr
-    tknzr = TweetTokenizer()
-    global lemmatizer
-    lemmatizer = WordNetLemmatizer()
-    global spell
-    spell=SpellChecker()
 importish()
-
+tknzr = TweetTokenizer()
+lemmatizer = WordNetLemmatizer()
+spell=SpellChecker()
 # Creating our tokenizer and lemmatizer
 @st.cache
 def remove_emoji(string):
@@ -68,9 +64,7 @@ def clean_text(text):
     text_nonum = re.sub(r'\d+', '', text)
     text_no_misplacedstop = text_nonum.replace('.',' ')
     text_no_forslash = text_no_misplacedstop.replace('/',' ')
-    tknzr = TweetTokenizer()
     answer = tknzr.tokenize(text_no_forslash)
-    spell=SpellChecker()
     SpellChecked=[spell.correction(word) for word in answer]
     answer =' '.join(SpellChecked)
     # remove punctuations and convert characters to lower case
@@ -82,14 +76,11 @@ def clean_text(text):
     # remove forward slash with space
     text_no_doublespace = re.sub('\s+', ' ',text_no_punc).strip()
     return text_no_doublespace
-@st.cache
-def stopwords():
-    global stpwrd
-    stpwrd = nltk.corpus.stopwords.words('english')
-    stpwrd.extend(string.punctuation)
-    keepwords="don't,does,no,not,can,should,will,aren't,couldn't,doesn't,isn't,shouldn't,won't,is".split(',')
-    for word in keepwords:
-        stpwrd.remove(word)
+stpwrd = nltk.corpus.stopwords.words('english')
+stpwrd.extend(string.punctuation)
+keepwords="don't,does,no,not,can,should,will,aren't,couldn't,doesn't,isn't,shouldn't,won't,is".split(',')
+for word in keepwords:
+    stpwrd.remove(word)
 stopwords()
 def lem_data(data):
   tknzr = TweetTokenizer()  
