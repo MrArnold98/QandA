@@ -1,38 +1,42 @@
 #!/usr/bin/env python3
-import streamlit as st
-import pandas as pd
-import numpy as np
-import gzip
-
-import gensim.downloader as api
-from gensim import corpora
-from gensim.similarities import WordEmbeddingSimilarityIndex
-from gensim.similarities import SparseTermSimilarityMatrix
-
-import os
-import itertools
-from collections import Counter
-import re
-import string
-from textblob import Word
-import nltk 
-from nltk.corpus import stopwords 
-from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer
-from nltk.stem.porter import PorterStemmer
-from nltk.stem.lancaster import LancasterStemmer
-from nltk.tokenize import TweetTokenizer
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.linear_model import LogisticRegression
-from spellchecker import SpellChecker
-nltk.download('stopwords')
-nltk.download('punkt')
-nltk.download('wordnet')
+@st.cache
+def imports():
+    import streamlit as st
+    import pandas as pd
+    import numpy as np
+    import gzip
+    import gensim.downloader as api
+    from gensim import corpora
+    from gensim.similarities import WordEmbeddingSimilarityIndex
+    from gensim.similarities import SparseTermSimilarityMatrix
+    import os
+    import itertools
+    from collections import Counter
+    import re
+    import string
+    from textblob import Word
+    import nltk 
+    from nltk.corpus import stopwords 
+    from nltk.tokenize import word_tokenize
+    from nltk.stem import WordNetLemmatizer
+    from nltk.stem.porter import PorterStemmer
+    from nltk.stem.lancaster import LancasterStemmer
+    from nltk.tokenize import TweetTokenizer
+    from sklearn.feature_extraction.text import CountVectorizer
+    from sklearn.linear_model import LogisticRegression
+    from spellchecker import SpellChecker
+    nltk.download('stopwords')
+    nltk.download('punkt')
+    nltk.download('wordnet')
+    global tknzr
+    tknzr = TweetTokenizer()
+    global lemmatizer
+    lemmatizer = WordNetLemmatizer()
+    global spell
+    spell=SpellChecker()
+imports()
 # Creating our tokenizer and lemmatizer
-
-tknzr = TweetTokenizer()
-lemmatizer = WordNetLemmatizer()
-spell=SpellChecker()
+@st.cache
 def remove_emoji(string):
     emoji_pattern = re.compile("["
                            u"\U0001F600-\U0001F64F" # emoticons
@@ -55,7 +59,7 @@ def remove_emoji(string):
                            u"\u3030"
                            "]+", flags=re.UNICODE)
     return emoji_pattern.sub(r'', string)
-
+@st.cache
 def clean_text(text):
     # remove numbers
     text=remove_emoji(text)
@@ -74,26 +78,27 @@ def clean_text(text):
     # remove forward slash with space
     text_no_doublespace = re.sub('\s+', ' ',text_no_punc).strip()
     return text_no_doublespace
-
-# stopwords
+@st.cache
+def stopwords():
+global stpwrd
 stpwrd = nltk.corpus.stopwords.words('english')
 stpwrd.extend(string.punctuation)
 keepwords="don't,does,no,not,can,should,will,aren't,couldn't,doesn't,isn't,shouldn't,won't,is".split(',')
 for word in keepwords:
     stpwrd.remove(word)
-
-def lem_data(data):  
+stopwrods()
+def lem_data(data):
   data = tknzr.tokenize(data)   
   data = [word for word in data if word not in stpwrd]  
   data = [lemmatizer.lemmatize(x) for x in data]
   return data
-
+@st.cache
 def questiontype(df):
   YeeeNooo=df[df['question'].str.contains('does|can|will|would',flags=re.IGNORECASE)].index.to_list() 
   df['qtype']='open-ended'
   df.at[YeeeNooo,'qtype']='yes/no'
   return df
-
+@st.cache
 def yes_no(df):
 # yes/no helpful replies
     Yes_No=df[df['answer'].str.contains('definitely|absolutely|positively|suppose so|believe so|think so',flags=re.IGNORECASE,regex=True)].index.to_list()
@@ -106,6 +111,7 @@ def yes_no(df):
     for x in definitively_definitive:
         df.at[x,'Helpful-Definitive']=1 
     return df
+@st.cache
 def specboyQ(df): 
         # definitively unhelpful replies
     idk=df[df['answer'].str.contains("don't know|not sure|do not know|can't help|not arrived|gift",flags=re.IGNORECASE)].index.to_list()
@@ -121,12 +127,16 @@ def specboyQ(df):
     df['Helpful-QAnswered']=0
     df.at[QAnswered,'Helpful-QAnswered']=1
     return df
-
-# loading pre-trained word embedding
-# word2vec module that's pre-trained on the english wikipedia corpus.
-w2v_model = api.load("glove-wiki-gigaword-50")
-similarity_index = WordEmbeddingSimilarityIndex(w2v_model)
-
+@st.cache
+def complicated_stuff():
+    # loading pre-trained word embedding
+    # word2vec module that's pre-trained on the english wikipedia corpus.
+    global w2v_model
+    w2v_model = api.load("glove-wiki-gigaword-50")
+    global similarity_index
+    similarity_index = WordEmbeddingSimilarityIndex(w2v_model)
+complicated_stuff()
+@st.cache
 def SCM(q, a): 
   """Function that calculates Soft Cosine Similarity between a Question and its Answer
      references: https://devopedia.org/question-similarity
@@ -152,7 +162,7 @@ def SCM(q, a):
   percentage_similarity= round(similarity * 100,2)
 #f'\nThe percentage chance the answer is useful is {percentage_similarity}% similar.'
   return f'The answer is {percentage_similarity}% similar to the question.'
-
+@st.cache
 def is_useful(q, a, questionType, answerType):
     """Function that evaluates the usefulness of the answer to a question 
     in the Amazon reviews section"""
