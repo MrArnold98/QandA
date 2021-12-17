@@ -178,7 +178,7 @@ q = st.text_input("Ask a question", value="", max_chars=None, key=None, type="de
 qtype = st.radio("What type of question is this?",["yes/no","open-ended"])
 a = st.text_input("Answer the question", value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None)
 atype = st.radio("What type of answer is this?",["Y","N","Other","That is confidential"])
-if st.button("Let's go", key=None, help=None, on_click=None, args=None, kwargs=None):
+if st.button("Am I useful? 🥺", key=None, help=None, on_click=None, args=None, kwargs=None):
   answer=is_useful(q,a,qtype,atype)
   st.text({answer})
 
