@@ -92,6 +92,7 @@ def stopwords():
         stpwrd.remove(word)
 stopwords()
 def lem_data(data):
+  tknzr = TweetTokenizer()  
   data = tknzr.tokenize(data)   
   data = [word for word in data if word not in stpwrd]  
   data = [lemmatizer.lemmatize(x) for x in data]
