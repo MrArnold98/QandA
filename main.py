@@ -167,10 +167,10 @@ def is_useful(q, a, questionType, answerType):
     df=specboyQ(df)
     if (df['questionType'].iloc[0]=='yes/no')|(df['qtype'][0]=='yes/no'):
         df=yes_no(df)
-    if len(df)==df['Helpful-QAnswered'].sum()+df['Helpful-Definitive'].sum():
-        return 'This answer is helpful'
-    elif len(df)==df['Unhelpful'].sum():
+    if len(df)==df['Unhelpful'].sum():
         return 'This answer is unhelpful'
+    elif len(df)==df['Helpful-QAnswered'].sum()+df['Helpful-Definitive'].sum():
+        return 'This answer is helpful'
     return SCM(q=df['question'].iloc[0],a=df['answer'].iloc[0])
 
 st.title("How useful is the answer?")
