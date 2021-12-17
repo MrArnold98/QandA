@@ -148,7 +148,7 @@ def SCM(q, a):
   similarity_matrix = SparseTermSimilarityMatrix(slow_funcs(), dictionary)
 
   # compute SCM using the inner_product method
-  similarity = slow_funcs().inner_product(q_bag, a_bag, normalized=(True, True))
+  similarity = similarity_matrix.inner_product(q_bag, a_bag, normalized=(True, True))
 
   # convert SCM score to percentage
   percentage_similarity= round(similarity * 100,2)
