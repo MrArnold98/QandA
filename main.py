@@ -128,7 +128,7 @@ def slow_funcs():
     w2v_model = api.load("glove-wiki-gigaword-50")
     global similarity_index
     similarity_index = WordEmbeddingSimilarityIndex(w2v_model)
-    return w2v_model, similarity_index
+    return similarity_index
 @st.cache
 def SCM(q, a): 
   """Function that calculates Soft Cosine Similarity between a Question and its Answer
@@ -146,10 +146,10 @@ def SCM(q, a):
   a_bag = dictionary.doc2bow(a_lem)
 
   # Prepare the similarity matrix
-  similarity_matrix = SparseTermSimilarityMatrix(similarity_index, dictionary)
+  similarity_matrix = SparseTermSimilarityMatrix(slow_funcs, dictionary)
 
   # compute SCM using the inner_product method
-  similarity = similarity_matrix.inner_product(q_bag, a_bag, normalized=(True, True))
+  similarity = slow_funcs.inner_product(q_bag, a_bag, normalized=(True, True))
 
   # convert SCM score to percentage
   percentage_similarity= round(similarity * 100,2)
