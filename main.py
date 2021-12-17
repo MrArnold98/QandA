@@ -87,7 +87,7 @@ def lem_data(data):
   data = [word for word in data if word not in stpwrd]  
   data = [lemmatizer.lemmatize(x) for x in data]
   return data
-@st.cache(allow_output_mutation=True,allow_output_mutation=True)
+@st.cache(allow_output_mutation=True)
 def questiontype(df):
   YeeeNooo=df[df['question'].str.contains('does|can|will|would',flags=re.IGNORECASE)].index.to_list() 
   df['qtype']='open-ended'
