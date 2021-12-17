@@ -3,7 +3,6 @@ gensim
 pandas
 streamlit
 numpy
-pickle
 nltk
 pyspellchecker
 gzip
