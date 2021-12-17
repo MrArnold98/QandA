@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 !pip install textblob
 !pip install gensim
 !pip install --upgrade gensim
