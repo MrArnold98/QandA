@@ -174,6 +174,8 @@ def is_useful(q, a, questionType, answerType):
         return 'This answer is unhelpful'
     elif len(df)==df['Helpful-QAnswered'].sum()+df['Helpful-Definitive'].sum():
         return 'This answer is helpful'
+    w2v_model=slow_funcs1()
+    similarity_index=slow_funcs2()
     return SCM(q=df['question'].iloc[0],a=df['answer'].iloc[0])
 
 st.title("How useful is the answer?")
@@ -183,9 +185,6 @@ qtype = st.radio("What type of question is this?",["yes/no","open-ended"])
 a = st.text_input("Answer the question", value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None)
 atype = st.radio("What type of answer is this?",["Y","N","Other","That is confidential"])
 if st.button("Am I useful? 🥺", key=None, help=None, on_click=None, args=None, kwargs=None):
-  if qtype=='open-ended':
-    w2v_model=slow_funcs1()
-    similarity_index=slow_funcs2()
   answer=is_useful(q,a,qtype,atype)
   st.text({answer})
 
