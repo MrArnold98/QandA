@@ -123,14 +123,11 @@ def specboyQ(df):
     df.at[QAnswered,'Helpful-QAnswered']=1
     return df
 @st.cache
-def complicated_stuff():
-    # loading pre-trained word embedding
-    # word2vec module that's pre-trained on the english wikipedia corpus.
-    global w2v_model
-    w2v_model = api.load("glove-wiki-gigaword-50")
-    global similarity_index
-    similarity_index = WordEmbeddingSimilarityIndex(w2v_model)
-complicated_stuff()
+
+w2v_model = api.load("glove-wiki-gigaword-50")
+
+similarity_index = WordEmbeddingSimilarityIndex(w2v_model)
+
 @st.cache
 def SCM(q, a): 
   """Function that calculates Soft Cosine Similarity between a Question and its Answer
