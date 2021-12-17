@@ -129,7 +129,6 @@ def slow_funcs():
     global similarity_index
     similarity_index = WordEmbeddingSimilarityIndex(w2v_model)
     return similarity_index
-@st.cache
 def SCM(q, a): 
   """Function that calculates Soft Cosine Similarity between a Question and its Answer
      references: https://devopedia.org/question-similarity
