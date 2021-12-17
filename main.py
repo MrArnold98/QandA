@@ -108,7 +108,7 @@ def yes_no(df):
     return df
 def specboyQ(df): 
         # definitively unhelpful replies
-    idk=df[df['answer'].str.contains("don't know|not sure|do not know|sorry|can't help|not arrived|gift",flags=re.IGNORECASE)].index.to_list()
+    idk=df[df['answer'].str.contains("don't know|not sure|do not know|can't help|not arrived|gift",flags=re.IGNORECASE)].index.to_list()
     df['Unhelpful']=0
     df.at[idk,'Unhelpful']=1
     size=df[(df['answer'].str.contains('"|width|height|wide|long|tall|high|inch|measures|inch|metre|meter|feet|cm|centimetre|millimetre|big|small|large|tiny',flags=re.IGNORECASE))&(df['question'].str.contains('size|big|high|wide|diameter|clearance|clearence|dimension|dimention|depth|height|width|high|wide|measure',flags=re.IGNORECASE))].index.to_list()
