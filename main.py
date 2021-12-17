@@ -80,12 +80,12 @@ def clean_text(text):
     return text_no_doublespace
 @st.cache
 def stopwords():
-global stpwrd
-stpwrd = nltk.corpus.stopwords.words('english')
-stpwrd.extend(string.punctuation)
-keepwords="don't,does,no,not,can,should,will,aren't,couldn't,doesn't,isn't,shouldn't,won't,is".split(',')
-for word in keepwords:
-    stpwrd.remove(word)
+    global stpwrd
+    stpwrd = nltk.corpus.stopwords.words('english')
+    stpwrd.extend(string.punctuation)
+    keepwords="don't,does,no,not,can,should,will,aren't,couldn't,doesn't,isn't,shouldn't,won't,is".split(',')
+    for word in keepwords:
+        stpwrd.remove(word)
 stopwrods()
 def lem_data(data):
   data = tknzr.tokenize(data)   
