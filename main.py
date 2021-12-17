@@ -1,40 +1,39 @@
 #!/usr/bin/env python3
 import streamlit as st
+
+import pandas as pd
+import numpy as np
+import gzip
+import gensim.downloader as api
+from gensim import corpora
+from gensim.similarities import WordEmbeddingSimilarityIndex
+from gensim.similarities import SparseTermSimilarityMatrix
+import os
+import itertools
+from collections import Counter
+import re
+import string
+from textblob import Word
+import nltk 
+from nltk.corpus import stopwords 
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+from nltk.stem.porter import PorterStemmer
+from nltk.stem.lancaster import LancasterStemmer
+from nltk.tokenize import TweetTokenizer
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.linear_model import LogisticRegression
+from spellchecker import SpellChecker
 @st.cache
-def imports():
-    import pandas as pd
-    import numpy as np
-    import gzip
-    import gensim.downloader as api
-    from gensim import corpora
-    from gensim.similarities import WordEmbeddingSimilarityIndex
-    from gensim.similarities import SparseTermSimilarityMatrix
-    import os
-    import itertools
-    from collections import Counter
-    import re
-    import string
-    from textblob import Word
-    import nltk 
-    from nltk.corpus import stopwords 
-    from nltk.tokenize import word_tokenize
-    from nltk.stem import WordNetLemmatizer
-    from nltk.stem.porter import PorterStemmer
-    from nltk.stem.lancaster import LancasterStemmer
-    from nltk.tokenize import TweetTokenizer
-    from sklearn.feature_extraction.text import CountVectorizer
-    from sklearn.linear_model import LogisticRegression
-    from spellchecker import SpellChecker
+def importish():
     nltk.download('stopwords')
     nltk.download('punkt')
     nltk.download('wordnet')
-    global tknzr
     tknzr = TweetTokenizer()
-    global lemmatizer
     lemmatizer = WordNetLemmatizer()
-    global spell
     spell=SpellChecker()
-imports()
+importish()
+
 # Creating our tokenizer and lemmatizer
 @st.cache
 def remove_emoji(string):
