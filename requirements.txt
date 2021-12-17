@@ -5,7 +5,7 @@ streamlit
 numpy
 nltk
 pyspellchecker
-gzip
+indexed-gzip
 os
 re
 itertools
