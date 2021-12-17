@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-!pip install textblob
-!pip install gensim
-!pip install --upgrade gensim
-!pip install pyspellchecker
 import streamlit as st
 import pandas as pd
 import numpy as np
