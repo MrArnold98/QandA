@@ -101,8 +101,9 @@ def yes_no(df):
     Yep=df[df['answer'].str.contains('yep',flags=re.IGNORECASE,regex=False)].index.to_list()
     No=df[df['answer'].str.contains('no',flags=re.IGNORECASE,regex=False)].index.to_list()
     Nah=df[df['answer'].str.contains('nah',flags=re.IGNORECASE,regex=False)].index.to_list()
+    Nope=df[df['answer'].str.contains('nope',flags=re.IGNORECASE,regex=False)].index.to_list()
     Not=df[df['answer'].str.contains('not',flags=re.IGNORECASE,regex=False)].index.to_list()
-    df.at[Yes_No+Yes+No+Not+Yep+Nah,'Helpful-Definitive']=1
+    df.at[Yes_No+Yes+No+Not+Yep+Nah+Nope,'Helpful-Definitive']=1
     
     definitively_definitive=df[((df['answerType']=='Y')|(df['answerType']=='N'))&(df['Helpful-Definitive']==0)].index.to_list()
     for x in definitively_definitive:
