@@ -155,7 +155,6 @@ def SCM(q, a):
   percentage_similarity= round(similarity * 100,2)
 #f'\nThe percentage chance the answer is useful is {percentage_similarity}% similar.'
   return f'The answer is {percentage_similarity}% similar to the question.'
-@st.cache
 def is_useful(q, a, questionType, answerType):
     """Function that evaluates the usefulness of the answer to a question 
     in the Amazon reviews section"""
