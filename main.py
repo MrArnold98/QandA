@@ -122,8 +122,13 @@ def specboyQ(df):
     df['Helpful-QAnswered']=0
     df.at[QAnswered,'Helpful-QAnswered']=1
     return df
-w2v_model = api.load("glove-wiki-gigaword-50")
-similarity_index = WordEmbeddingSimilarityIndex(w2v_model)
+@st.cache
+def slow_funcs():
+    global w2v_model
+    w2v_model = api.load("glove-wiki-gigaword-50")
+    global similarity_index
+    similarity_index = WordEmbeddingSimilarityIndex(w2v_model)
+    return w2v_model, similarity_index
 @st.cache
 def SCM(q, a): 
   """Function that calculates Soft Cosine Similarity between a Question and its Answer
