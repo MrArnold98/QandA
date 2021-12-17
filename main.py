@@ -115,6 +115,7 @@ def specboyQ(df):
     where=df[(df['answer'].str.contains('under|behind|top|bottom|left|right|side|front|back|over|below|inside|outside',flags=re.IGNORECASE))&(df['question'].str.contains('where',flags=re.IGNORECASE))].index.to_list()
     itis=df[(df['answer'].str.contains("its|it's|it is",flags=re.IGNORECASE))&(df['question'].str.contains('is this|is it',flags=re.IGNORECASE))].index.to_list()
     how=df[(df['answer'].str.contains("use|using|have to",flags=re.IGNORECASE))&(df['question'].str.contains('how',flags=re.IGNORECASE))].index.to_list()
+    can=df[(df['answer'].str.contains("can",flags=re.IGNORECASE))&(df['question'].str.contains('can',flags=re.IGNORECASE))].index.to_list()
     inclusive=df[(df['answer'].str.contains('came with|comes with|include',flags=re.IGNORECASE))&(df['question'].str.contains('come with|include',flags=re.IGNORECASE))].index.to_list()
     QAnswered=inclusive+where+itis+size+how
     df['Helpful-QAnswered']=0
