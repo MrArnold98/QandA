@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import streamlit as st
-import warnings
-warnings.filterwarnings("ignore")
+showWarningOnDirectExecution = False
 import pandas as pd
 import numpy as np
 import gzip
