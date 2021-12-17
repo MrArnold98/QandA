@@ -81,7 +81,6 @@ stpwrd.extend(string.punctuation)
 keepwords="don't,does,no,not,can,should,will,aren't,couldn't,doesn't,isn't,shouldn't,won't,is".split(',')
 for word in keepwords:
     stpwrd.remove(word)
-stopwords()
 def lem_data(data):
   tknzr = TweetTokenizer()  
   data = tknzr.tokenize(data)   
