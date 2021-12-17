@@ -24,7 +24,7 @@ from nltk.tokenize import TweetTokenizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
 from spellchecker import SpellChecker
-@st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True,allow_output_mutation=True)
 def importish():
     nltk.download('stopwords')
     nltk.download('punkt')
@@ -34,7 +34,7 @@ tknzr = TweetTokenizer()
 lemmatizer = WordNetLemmatizer()
 spell=SpellChecker()
 # Creating our tokenizer and lemmatizer
-@st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True,allow_output_mutation=True)
 def remove_emoji(string):
     emoji_pattern = re.compile("["
                            u"\U0001F600-\U0001F64F" # emoticons
@@ -57,7 +57,7 @@ def remove_emoji(string):
                            u"\u3030"
                            "]+", flags=re.UNICODE)
     return emoji_pattern.sub(r'', string)
-@st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True,allow_output_mutation=True)
 def clean_text(text):
     # remove numbers
     text=remove_emoji(text)
@@ -87,13 +87,13 @@ def lem_data(data):
   data = [word for word in data if word not in stpwrd]  
   data = [lemmatizer.lemmatize(x) for x in data]
   return data
-@st.cache(allow_output_mutation=True)
+@st.cache(allow_output_mutation=True,allow_output_mutation=True)
 def questiontype(df):
   YeeeNooo=df[df['question'].str.contains('does|can|will|would',flags=re.IGNORECASE)].index.to_list() 
   df['qtype']='open-ended'
   df.at[YeeeNooo,'qtype']='yes/no'
   return df
-@st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True,allow_output_mutation=True)
 def yes_no(df):
 # yes/no helpful replies
     Yes_No=df[df['answer'].str.contains('definitely|absolutely|positively|suppose so|believe so|think so',flags=re.IGNORECASE,regex=True)].index.to_list()
@@ -108,7 +108,7 @@ def yes_no(df):
     for x in definitively_definitive:
         df.at[x,'Helpful-Definitive']=1 
     return df
-@st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True,allow_output_mutation=True)
 def specboyQ(df): 
         # definitively unhelpful replies
     idk=df[df['answer'].str.contains("don't know|not sure|do not know|can't help|not arrived|gift",flags=re.IGNORECASE)].index.to_list()
@@ -124,7 +124,7 @@ def specboyQ(df):
     df['Helpful-QAnswered']=0
     df.at[QAnswered,'Helpful-QAnswered']=1
     return df
-@st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True,allow_output_mutation=True)
 def slow_funcs():
     w2v_model = api.load("glove-wiki-gigaword-50")
     similarity_index = WordEmbeddingSimilarityIndex(w2v_model)
