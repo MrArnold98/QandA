@@ -6,7 +6,5 @@ numpy
 nltk
 pyspellchecker
 indexed-gzip
-os
 re
-itertools
 string
