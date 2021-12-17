@@ -123,11 +123,8 @@ def specboyQ(df):
     df.at[QAnswered,'Helpful-QAnswered']=1
     return df
 @st.cache
-def slow_funcs1():
+def slow_funcs():
     w2v_model = api.load("glove-wiki-gigaword-50")
-    return w2v_model
-@st.cache
-def slow_funcs2():
     similarity_index = WordEmbeddingSimilarityIndex(w2v_model)
     return similarity_index
 @st.cache
@@ -136,7 +133,7 @@ def SCM(q, a):
      references: https://devopedia.org/question-similarity
     https://notebook.community/gojomo/gensim/docs/notebooks/soft_cosine_tutorial
     """
-
+  similarity_index = slow_funcs()
   q_lem = lem_data(q)
   a_lem = lem_data(a)
   documents = [q_lem,a_lem]
@@ -174,8 +171,6 @@ def is_useful(q, a, questionType, answerType):
         return 'This answer is unhelpful'
     elif len(df)==df['Helpful-QAnswered'].sum()+df['Helpful-Definitive'].sum():
         return 'This answer is helpful'
-    w2v_model=slow_funcs1()
-    similarity_index=slow_funcs2()
     return SCM(q=df['question'].iloc[0],a=df['answer'].iloc[0])
 
 st.title("How useful is the answer?")
